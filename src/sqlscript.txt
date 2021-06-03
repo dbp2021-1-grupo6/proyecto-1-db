@@ -1,0 +1,19 @@
+/*
+DROP TABLE stock;
+DROP TABLE inventario;
+DROP TABLE objeto;
+DROP TABLE tienda;
+DROP TABLE usuario;
+*/
+
+
+INSERT INTO tienda (id,nombre) VALUES (1,'DMarket');
+INSERT INTO tienda (id,nombre) VALUES (2,'CSGO-Shop');
+INSERT INTO tienda (id,nombre) VALUES (3,'Dota2-Shop');
+
+INSERT INTO objeto (id,nombre,juego,url) VALUES (1,'Transversant Soul of the Crimson Witness','DOTA 2','https://tinyurl.com/spectre-red-inmortal');
+INSERT INTO objeto (id,nombre,juego,url) VALUES (2,'Transversant Soul of the Crimson Witness','DOTA 2','https://tinyurl.com/spectre-red-inmortal');
+
+INSERT INTO stock (o_id,t_id,costo) VALUES (1,1,700);
+
+COMMIT
