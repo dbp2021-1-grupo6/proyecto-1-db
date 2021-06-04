@@ -17,15 +17,13 @@
 <table>
     <thead>
     <tr>
-        <th>ID</th>
         <th>Nombre de la tienda</th>
     </tr>
     </thead>
     <tbody>
     {% for row in data %}
     <tr>
-        <td>{{row.id}}</td>
-        <td>{{row.nombre}}</td>
+        <td>{{row[0]}}</td>
     </tr>
     {% endfor %}
     </tbody>
