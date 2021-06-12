@@ -1,0 +1,17 @@
+/*
+DROP TABLE inventory;
+DROP TABLE client;
+DROP TABLE game;
+*/
+
+INSERT INTO game (name,category,price,image_url)
+ VALUES ('Counter-Strike: Global Offensive','First Person Shooter',0,'https://cdn.akamai.steamstatic.com/steam/apps/730/capsule_184x69.jpg?t=1623182945');
+INSERT INTO game (name,category,price,image_url)
+ VALUES ('Dota 2','MOBA',10.5,'https://cdn.akamai.steamstatic.com/steam/apps/570/capsule_184x69.jpg?t=1618283868');
+INSERT INTO game (name,category,price,image_url)
+ VALUES ('PLAYERUNKNOWN''S BATTLEGROUNDS','Battle Royale',60.8,'https://cdn.akamai.steamstatic.com/steam/apps/578080/capsule_184x69.jpg?t=1622701353');
+INSERT INTO game (name,category,price,image_url)
+ VALUES ('Apex Legends','First Person Shooter',20.3,'https://cdn.akamai.steamstatic.com/steam/apps/1172470/capsule_184x69.jpg?t=1623512251');
+INSERT INTO game (name,category,price,image_url)
+ VALUES ('Grand Theft Auto V','Open World',100,'https://cdn.akamai.steamstatic.com/steam/apps/271590/capsule_184x69.jpg?t=1618856444');
+COMMIT;

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href={{ url_for('static', filename='/css/navbar.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='/css/table.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='/css/page.css') }}>
+    <meta charset="UTF-8">
+    <title>Tiendas</title>
+</head>
+<body>
+<div class="navBar">
+    <a href="../home" class="navBarElement">U-Games</a>
+    <div class = "navBarLoginBar">
+        <a href="../register" class="navBarElement">Registrarse</a>
+        <a href="../login" class="navBarElement">Iniciar Sesión</a>
+    </div>
+</div>
+<h1>
+    JUEGOS
+</h1>
+<table>
+    <tbody>
+    {% for row in data %}
+    <tr class="game">
+        <td class="imgrow">
+            <img src={{row[4]}}>
+        </td>
+        <td class="namerow">
+            {{row[1]}}
+        </td>
+        <td>
+            {{row[2]}}
+        </td>
+        <td class="price">
+            <form method="get">
+                <input type="button" value=s/.{{row[3]}}>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

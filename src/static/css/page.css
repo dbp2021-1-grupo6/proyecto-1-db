@@ -1,0 +1,37 @@
+body{
+    background-color: #706e6e;
+}
+
+h1{
+    text-align: center;
+    color: white;
+    text-shadow: 2px 0 0 #2a2a2a;
+}
+
+.mainImage{
+    margin: auto;
+    margin-top: 20px;
+    justify-content: center;
+    display: flex;
+    border: #2a2a2a 5px solid;
+}
+
+.centered{
+    margin: auto;
+    margin-top: 20px;
+    justify-content: center;
+    display: flex;
+}
+
+.bigButton{
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  background: rgb(2,0,36);
+  background: linear-gradient(6deg, rgba(2,0,36,1) 0%, rgba(42,42,42,1) 57%);
+    color: white;
+    text-decoration: none;
+    width: 200px;
+  font-size: 32px
+}
