@@ -1,0 +1,28 @@
+.navBar{
+  width: 100%;
+  overflow: auto;
+  background: rgb(2,0,36);
+  background: linear-gradient(6deg, rgba(2,0,36,1) 0%, rgba(42,42,42,1) 57%)
+}
+
+.navBar a{
+  float: left;
+  text-align: center;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px
+}
+
+.navBarLoginBar a{
+  float: right;
+  text-align: center;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px
+}
+
+.navBarLoginBar a:hover{
+  background-color: #000;
+}

@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" href={{ url_for('static', filename='/css/navbar.css') }}>
   <meta charset="UTF-8">
   <title>Stock</title>
 </head>
 <body>
-<style>
-
- td {
-        width: 150px;
-        text-align: center;
-        border: 1px solid black;
-        padding: 5px;
-      }
-</style>
+<div class="navBar">
+  <a href="#" class="navBarElement">Nombre del sitio</a>
+  <div class = "navBarLoginBar">
+    <a href="#register" class="navBarElement button">Registrarse</a>
+    <a href="#login" class="navBarElement button">Iniciar Sesión</a>
+  </div>
+</div>
 <table>
   <thead>
   <tr>
@@ -26,9 +25,18 @@
   <tr>
     <td>{{row[0]}}</td>
     <td>{{row[1]}}</td>
+    <button value="Comprar"/>
   </tr>
   {% endfor %}
   </tbody>
 </table>
 </body>
+<style>
+ td {
+        width: 150px;
+        text-align: center;
+        border: 1px solid black;
+        padding: 5px;
+      }
+</style>
 </html>
