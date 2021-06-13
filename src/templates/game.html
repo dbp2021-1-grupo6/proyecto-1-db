@@ -22,6 +22,8 @@
     <tbody>
     {% for row in data %}
     <tr class="game">
+        <div id="rowId" style="display: none;">{{row.id}}</div>
+        <div id="rowPrice" style="display: none;">{{row.price}}</div>
         <td class="imgrow">
             <img src={{row.image_url}}>
         </td>
@@ -32,13 +34,27 @@
             {{row.category}}
         </td>
         <td class="price">
-            <form method="get">
-                <input type="button" value=s/.{{row.price}}>
-            </form>
+            <input type="button" value=s/.{{row.price}} onclick="processBuy()" class="deleteButton">
         </td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+    function processBuy(){
+        var rId = document.getElementById("rowId").innerHTML;
+        var rPrice = document.getElementById("rowPrice").innerHTML;
+        var message = {'id':rId,'price':rPrice};
+        console.log(rId);
+        $.post({
+            url: '/games',
+            type: 'post',
+            contentType: 'application/json',
+            success: function(data){console.log("Compra exitosa")},
+            data: JSON.stringify(message)
+        })
+    }
+</script>
 </body>
 </html>

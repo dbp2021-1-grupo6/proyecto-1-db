@@ -15,8 +15,13 @@ table{
     color: white;
 }
 
-.game input{
+.buyButton{
     background-color: green;
+    color: white;
+}
+
+.deleteButton{
+    background-color: red;
     color: white;
 }
 

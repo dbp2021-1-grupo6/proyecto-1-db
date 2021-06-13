@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href={{ url_for('static', filename='/css/navbar.css') }}>
+  <link rel="stylesheet" href={{ url_for('static', filename='/css/table.css') }}>
+  <link rel="stylesheet" href={{ url_for('static', filename='/css/page.css') }}>
+  <meta charset="UTF-8">
+  <title>Inventario</title>
+</head>
+<body>
+<div class="navBar">
+  <a href="../home" class="navBarElement">U-Games</a>
+  <div class = "navBarLoginBar">
+    <a href="../register" class="navBarElement">Registrarse</a>
+    <a href="../login" class="navBarElement">Iniciar Sesión</a>
+  </div>
+</div>
+<h1>
+  INVENTARIO
+</h1>
+<table>
+  <tbody>
+  {% for row in data %}
+  <tr class="game">
+    <div id="rowId" style="display: none;">{{row.id}}</div>
+    <div id="rowPrice" style="display: none;">{{row.price}}</div>
+    <td class="imgrow">
+      <img src={{row.image_url}}>
+    </td>
+    <td class="namerow">
+      {{row.name}}
+    </td>
+    <td>
+      {{row.category}}
+    </td>
+    <td class="price">
+      <input type="button" value="Delete" class="deleteButton">
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+
+</script>
+</body>
+</html>

@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for
+import json
+
+from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.routing import ValidationError
 
@@ -6,6 +8,7 @@ app = Flask(__name__, static_url_path="/static")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/proyecto1dbp'
 db = SQLAlchemy(app)
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+app.secret_key = b'_5#y2L"F4Qpz\n\xec]/'
 
 
 class Client(db.Model):
@@ -41,14 +44,30 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/games', methods=['GET'])
+@app.route('/games', methods=['GET', 'POST'])
 def print_tiendas():
-    return render_template('game.html', data=Game.query.all())
+    if request.method == 'GET':
+        return render_template('game.html', data=Game.query.all())
+    else:
+        content = json.loads(request.data)
+        login_id = 2
+        if Inventory.query.filter_by(c_id=login_id, g_id=content['id']).first() is not None:
+            raise ValidationError('Juego ya comprado')
+        elif Client.query.filter_by(id=login_id).first().balance < float(content['price']):
+            raise ValidationError('Fondos Insuficientes')
+        else:
+            client = Client.query.filter_by(id=login_id).first()
+            client.balance -= float(content['price'])
+            db.session.add(Inventory(g_id=content['id'], c_id=login_id))
+            db.session.commit()
+            return json.dumps({'message': "ok"})
 
 
-@app.route('/inventory/<id>', methods=['GET'])
+@app.route('/inventory/<user_id>', methods=['GET'])
 def print_stock(user_id):
-    return render_template('stock.html', data=Inventory.query.filter_by(u_id=user_id).all())
+    return render_template('inventory.html', data=db.session.query(Game)
+                           .join(Inventory)
+                           .filter(Game.id == Inventory.g_id, Inventory.c_id == user_id).all())
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -57,17 +76,24 @@ def register_user_get():
         return render_template('register.html')
     else:
         content = request.form
-    if len(content['username']) > 32:
-        raise ValidationError('Nombre del usuario es mayor al límite de 32 caracteres.')
-    elif len(content['psw']) > 32:
-        raise ValidationError('Contraseña mayor del límite de 32 caracteres.')
-    elif content['psw'] is content['psw-repeat']:
-        raise ValidationError('Contraseñas no coinciden.')
-    elif Client.query.filter_by(username=content['username']).first() is not None:
-        raise ValidationError('Nombre del usuario ya existe.')
-    db.session.add(Client(username=content['username'], password=content['psw'], balance=200))
-    db.session.commit()
-    return redirect(url_for('home'))
+        if len(content['username']) > 32:
+            raise ValidationError('Nombre del usuario es mayor al límite de 32 caracteres.')
+        elif len(content['psw']) > 32:
+            raise ValidationError('Contraseña mayor del límite de 32 caracteres.')
+        elif content['psw'] is content['psw-repeat']:
+            raise ValidationError('Contraseñas no coinciden.')
+        elif Client.query.filter_by(username=content['username']).first() is not None:
+            raise ValidationError('Nombre del usuario ya existe.')
+        else:
+            db.session.add(Client(username=content['username'], password=content['psw'], balance=200))
+            db.session.commit()
+            return redirect(url_for('home'))
+
+
+@app.route('/login', methods=['GET'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
 
 
 if __name__ == '__main__':
