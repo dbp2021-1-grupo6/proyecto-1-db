@@ -23,17 +23,17 @@
     {% for row in data %}
     <tr class="game">
         <td class="imgrow">
-            <img src={{row[4]}}>
+            <img src={{row.image_url}}>
         </td>
         <td class="namerow">
-            {{row[1]}}
+            {{row.name}}
         </td>
         <td>
-            {{row[2]}}
+            {{row.category}}
         </td>
         <td class="price">
             <form method="get">
-                <input type="button" value=s/.{{row[3]}}>
+                <input type="button" value=s/.{{row.price}}>
             </form>
         </td>
     </tr>
