@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href={{ url_for('static', filename='/css/navbar.css') }}>
+  <link rel="stylesheet" href={{ url_for('static', filename='/css/page.css') }}>
+  <meta charset="UTF-8">
+  <title>Home</title>
+</head>
+<body>
+<div class="navBar">
+  <a href="../home" class="navBarElement">U-Games</a>
+  <div class = "navBarLoginBar">
+    <a href="../register" class="navBarElement">Registrarse</a>
+    <a href="../login" class="navBarElement">Iniciar Sesión</a>
+  </div>
+</div>
+<div class="profileDiv">
+  <b class="username">Username's Profile</b>
+  <div>
+    <img src="https://www.pasrc.org/sites/g/files/toruqf431/files/styles/freeform_750w/public/2021-03/blank-profile-picture-973460_1280.jpg?itok=QzRqRVu8" class="mainImage" style="width:300px;height:300px;">
+  </div>
+  <div class="invButton">
+    <a href="../inventory/2" >Ver inventario</a>
+  </div>
+  <div class="fondos">
+    <b>Añadir fondos</b>
+    <div>
+      <input type="text" placeholder="Escribir monto...">
+    </div>
+    <div>
+      <input type="button" value="Añadir">
+    </div>
+  </div>
+</div>
+</body>
+</html>

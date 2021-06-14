@@ -35,3 +35,45 @@ h1{
     width: 200px;
   font-size: 32px
 }
+
+.invButton{
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background: rgb(2,0,36);
+  background: linear-gradient(6deg, rgba(2,0,36,1) 0%, rgba(42,42,42,1) 57%);
+  width: 25%;
+  font-size: 32px
+}
+
+.invButton a{
+  color: white;
+  text-decoration: none;
+}
+
+.fondos{
+    margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  background: rgb(2,0,36);
+  background: linear-gradient(6deg, rgba(2,0,36,1) 0%, rgba(42,42,42,1) 57%);
+  color: white;
+  text-decoration: none;
+  width: 25%;
+  font-size: 32px
+}
+
+.username{
+  margin: auto;
+  margin-top: 100px;
+  margin-bottom: 10px;
+  text-align: center;
+  background: rgb(2,0,36);
+  background: linear-gradient(6deg, rgba(2,0,36,1) 0%, rgba(42,42,42,1) 57%);
+  color: white;
+  text-decoration: none;
+  width: 25%;
+  font-size: 32px
+}
