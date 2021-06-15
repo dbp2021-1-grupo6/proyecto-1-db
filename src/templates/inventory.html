@@ -22,8 +22,6 @@
   <tbody>
   {% for row in data %}
   <tr class="game">
-    <div id="rowId" style="display: none;">{{row.id}}</div>
-    <div id="rowPrice" style="display: none;">{{row.price}}</div>
     <td class="imgrow">
       <img src={{row.image_url}}>
     </td>
@@ -34,7 +32,7 @@
       {{row.category}}
     </td>
     <td class="price">
-      <input type="button" value="Delete" class="deleteButton">
+      <input type="button" value=Delete data-id="{{row.id}}"  class="deleteButton">
     </td>
   </tr>
   {% endfor %}
@@ -42,7 +40,22 @@
 </table>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
-
+    buttonList = document.querySelectorAll('.deleteButton');
+    for (let i = 0; i < buttonList.length; i++){
+        const buttonElem = buttonList[i];
+        buttonElem.onclick = function(e){
+            const buttonId = e.target.dataset['id'];
+            console.log(buttonId);
+            const message = {'id':buttonId};
+            $.post({
+                url: '/inventory/3',
+                type: 'delete',
+                contentType: 'application/json',
+                success: function(data){console.log("Juego borrado del inventario"); window.location.reload()},
+                data: JSON.stringify(message)
+            })
+        }
+    }
 </script>
 </body>
 </html>

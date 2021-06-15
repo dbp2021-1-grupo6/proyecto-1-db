@@ -22,8 +22,6 @@
     <tbody>
     {% for row in data %}
     <tr class="game">
-        <div id="rowId" style="display: none;">{{row.id}}</div>
-        <div id="rowPrice" style="display: none;">{{row.price}}</div>
         <td class="imgrow">
             <img src={{row.image_url}}>
         </td>
@@ -34,7 +32,7 @@
             {{row.category}}
         </td>
         <td class="price">
-            <input type="button" value=s/.{{row.price}} onclick="processBuy()" class="buyButton">
+            <input type="button" value=s/.{{row.price}} data-id="{{row.id}}" class="buyButton">
         </td>
     </tr>
     {% endfor %}
@@ -42,18 +40,21 @@
 </table>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
-    function processBuy(){
-        var rId = document.getElementById("rowId").innerHTML;
-        var rPrice = document.getElementById("rowPrice").innerHTML;
-        var message = {'id':rId,'price':rPrice};
-        console.log(rId);
-        $.post({
-            url: '/games',
-            type: 'post',
-            contentType: 'application/json',
-            success: function(data){console.log("Compra exitosa")},
-            data: JSON.stringify(message)
-        })
+    buttonList = document.querySelectorAll('.buyButton');
+    for (let i = 0; i < buttonList.length; i++){
+        const buttonElem = buttonList[i];
+        buttonElem.onclick = function(e){
+            const buttonId = e.target.dataset['id'];
+            console.log(buttonId);
+            const message = {'id':buttonId};
+            $.post({
+                url: '/games',
+                type: 'post',
+                contentType: 'application/json',
+                success: function(data){console.log("Compra exitosa")},
+                data: JSON.stringify(message)
+            })
+        }
     }
 </script>
 </body>

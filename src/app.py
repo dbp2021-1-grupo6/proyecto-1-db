@@ -50,24 +50,33 @@ def print_tiendas():
         return render_template('game.html', data=Game.query.all())
     else:
         content = json.loads(request.data)
-        login_id = 2
+        login_id = 3
+        print(content['id'])
         if Inventory.query.filter_by(c_id=login_id, g_id=content['id']).first() is not None:
             raise ValidationError('Juego ya comprado')
-        elif Client.query.filter_by(id=login_id).first().balance < float(content['price']):
+        elif Client.query.filter_by(id=login_id).first().balance < Game.query.filter_by(id=content['id']).first().price:
             raise ValidationError('Fondos Insuficientes')
         else:
             client = Client.query.filter_by(id=login_id).first()
-            client.balance -= float(content['price'])
+            client.balance -= Game.query.filter_by(id=content['id']).first().price
             db.session.add(Inventory(g_id=content['id'], c_id=login_id))
             db.session.commit()
             return json.dumps({'message': "ok"})
 
 
-@app.route('/inventory/<user_id>', methods=['GET'])
+@app.route('/inventory/<user_id>', methods=['GET', 'DELETE'])
 def print_stock(user_id):
-    return render_template('inventory.html', data=db.session.query(Game)
-                           .join(Inventory)
-                           .filter(Game.id == Inventory.g_id, Inventory.c_id == user_id).all())
+    if request.method == 'GET':
+        return render_template('inventory.html', data=db.session.query(Game)
+                               .join(Inventory)
+                               .filter(Game.id == Inventory.g_id, Inventory.c_id == user_id).all())
+    else:
+        content = json.loads(request.data)
+        login_id = 3
+        print(content['id'])
+        Inventory.query.filter_by(c_id=login_id, g_id=content['id']).delete()
+        db.session.commit()
+        return json.dumps({'message': "ok"})
 
 
 @app.route('/register', methods=['GET', 'POST'])
