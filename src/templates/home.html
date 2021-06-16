@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="navBar">
-  <a href="../home" class="navBarElement">U-Games</a>
+  <a href="../home" class="navBarElement">U-Games <div id="nombreusuario"></div></a>
   <div class = "navBarLoginBar">
     <a href="../register" class="navBarElement">Registrarse</a>
     <a href="../login" class="navBarElement">Iniciar Sesión</a>
@@ -23,3 +23,22 @@
 </div>
 </body>
 </html>
+
+<script>
+
+  localStorage = window.localStorage;
+
+  usuairoinfo = document.getElementById("nombre");
+
+  nombreusuario = document.getElementById("nombreusuario");
+
+  if (usuairoinfo.value != '') {
+    localStorage.setItem("usuairoinfo", usuairoinfo.value)
+  }
+
+  if(localStorage.getItem("usuairoinfo")) {
+    nombreusuario.innerHTML = localStorage.getItem("usuairoinfo")
+  }
+ 
+  
+</script>
