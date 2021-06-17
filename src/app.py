@@ -47,7 +47,8 @@ def home():
 @app.route('/games', methods=['GET', 'POST'])
 def print_tiendas():
     if request.method == 'GET':
-        return render_template('game.html', data=Game.query.all())
+        res = None
+        return render_template('game.html', res = res,  data=Game.query.all())
     else:
         content = json.loads(request.data)
         login_id = 3
@@ -105,7 +106,16 @@ def register_user_get():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
+
+    res = {
+        'username': '',
+        'estado': 0, # si es cero hay error en logeo, si es 1 todo correcto,
+        'mensaje': ''
+    }
+
+
+    if(request.method == 'POST'): 
+        # content = json.loads(request.data)
         content = request.form
         client = Client.query.filter_by(username=content['username']).first()
         if client is not None:

@@ -1,17 +1,17 @@
   localStorage = window.localStorage;
 
-  usuairoinfo = document.getElementById("nombre");
+  usuarioinfo = document.getElementById("nombre");
 
   nombreusuario = document.getElementById("nombreusuario");
 
   cerrarsesion = document.getElementById("cerrarsesion");
 
-  if (usuairoinfo.value != '') {
-    localStorage.setItem("usuairoinfo", usuairoinfo.value)
+  if (usuarioinfo.value != '') {
+    localStorage.setItem("usuarioinfo", usuarioinfo.value)
   }
 
-  if(localStorage.getItem("usuairoinfo")) {
-    nombreusuario.innerHTML = localStorage.getItem("usuairoinfo")
+  if(localStorage.getItem("usuarioinfo")) {
+    nombreusuario.innerHTML = localStorage.getItem("usuarioinfo")
 
     navLogOut.removeAttribute('style', 'display:block')
     navLogOut.setAttribute('style', 'display:none')
