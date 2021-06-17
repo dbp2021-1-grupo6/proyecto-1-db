@@ -1,9 +1,7 @@
 import json
-
 import werkzeug
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-from werkzeug.routing import ValidationError
 
 app = Flask(__name__, static_url_path="/static")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/proyecto1dbp'
@@ -54,18 +52,21 @@ def home():
 
 
 @app.route('/games', methods=['GET', 'POST'])
-def print_tiendas():
+def games():
     if request.method == 'GET':
         res = None
-        return render_template('game.html', res = res,  data=Game.query.all())
+        return render_template('game.html', res=res,  data=Game.query.all())
     else:
         content = json.loads(request.data)
-        login_id = 3
-        print(content['id'])
+        login_id = Client.query.filter_by(username=content['name']).first().id
         if Inventory.query.filter_by(c_id=login_id, g_id=content['id']).first() is not None:
-            raise ValidationError('Juego ya comprado')
+            print('el redirect no funca')
+            flash('Juego ya comprado')
+            return redirect(url_for('games'))
         elif Client.query.filter_by(id=login_id).first().balance < Game.query.filter_by(id=content['id']).first().price:
-            raise ValidationError('Fondos Insuficientes')
+            print('el redirect no funca')
+            flash('Fondos Insuficientes')
+            return redirect(url_for('games'))
         else:
             client = Client.query.filter_by(id=login_id).first()
             client.balance -= Game.query.filter_by(id=content['id']).first().price
@@ -84,8 +85,7 @@ def print_stock(user_id):
                                .filter(Game.id == Inventory.g_id, Inventory.c_id == user_id).all())
     else:
         content = json.loads(request.data)
-        login_id = 3
-        print(content['id'])
+        login_id = Client.query.filter_by(username=content['name']).first().id
         Inventory.query.filter_by(c_id=login_id, g_id=content['id']).delete()
         db.session.commit()
         db.session.close()
@@ -118,16 +118,7 @@ def register_user_get():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
-    res = {
-        'username': '',
-        'estado': 0, # si es cero hay error en logeo, si es 1 todo correcto,
-        'mensaje': ''
-    }
-
-
-    if(request.method == 'POST'): 
-        # content = json.loads(request.data)
+    if request.method == 'POST':
         content = request.form
         client = Client.query.filter_by(username=content['username']).first()
         if client is not None:

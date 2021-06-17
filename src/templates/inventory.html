@@ -53,9 +53,10 @@
     for (let i = 0; i < buttonList.length; i++){
         const buttonElem = buttonList[i];
         buttonElem.onclick = function(e){
+            username = document.getElementById('nombreusuario').innerHTML;
             const buttonId = e.target.dataset['id'];
             console.log(buttonId);
-            const message = {'id':buttonId};
+            const message = {'id':buttonId, 'name':username};
             $.post({
                 url: '/inventory/3',
                 type: 'delete',
