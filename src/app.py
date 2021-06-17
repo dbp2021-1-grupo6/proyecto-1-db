@@ -142,11 +142,12 @@ def profile(username):
         balance = Client.query.filter_by(username=username).first().balance
         return render_template('profile.html', res=None, usrnm=username, bal=balance)
     else:
-        client = Client.query.filter_by(id=3).first()
-        client.balance += float(request.form['monto'])
-        db.session.commit()
-        db.session.close()
-        flash('Fondos añadidos')
+        if request.form['monto'] != '' and float(request.form['monto']) > 0:
+            client = Client.query.filter_by(username=username).first()
+            client.balance += float(request.form['monto'])
+            db.session.commit()
+            db.session.close()
+            flash('Fondos añadidos')
         return redirect(url_for('profile', username=username))
 
 
