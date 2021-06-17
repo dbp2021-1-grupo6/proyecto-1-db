@@ -136,18 +136,18 @@ def login():
         return render_template('login.html')
 
 
-@app.route('/profile', methods=['GET', 'POST'])
-def profile():
+@app.route('/profile/<username>', methods=['GET', 'POST'])
+def profile(username):
     if request.method == 'GET':
-        res = None
-        return render_template('profile.html', res=res)
+        balance = Client.query.filter_by(username=username).first().balance
+        return render_template('profile.html', res=None, usrnm=username, bal=balance)
     else:
         client = Client.query.filter_by(id=3).first()
         client.balance += float(request.form['monto'])
         db.session.commit()
         db.session.close()
         flash('Fondos añadidos')
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile', username=username))
 
 
 if __name__ == '__main__':

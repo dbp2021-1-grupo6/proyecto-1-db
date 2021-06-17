@@ -28,26 +28,31 @@
   <div>
     <img src="https://www.pasrc.org/sites/g/files/toruqf431/files/styles/freeform_750w/public/2021-03/blank-profile-picture-973460_1280.jpg?itok=QzRqRVu8" class="mainImage" style="width:300px;height:300px;">
   </div>
-  <div class="invButton">
-    <a href="" id="inventoryRef">Ver inventario</a>
+  <div class="hideIfNot">
+    <div class="invButton">
+      <a href="" id="inventoryRef">Ver inventario</a>
+    </div>
+    <div class="fondos">
+      <form action="/profile/{{usrnm}}" method="post">
+        <a>Fondos: s./{{bal}}</a>
+        <label for="monto"><b>Añadir fondos</b></label>
+        {% with messages = get_flashed_messages() %}
+        {% if messages[0] %}
+        <div class="notification is-danger">
+          <p style="color: green">{{ messages }}</p>
+        </div>
+        {% endif %}
+        {% endwith %}
+        <input type="number" placeholder="Escribir monto..." id="monto" name="monto" value="">
+        <button type="submit">Añadir</button>
+      </form>
+    </div>
   </div>
-  <div class="fondos">
-    <form action="/profile" method="post">
-      <label for="monto"><b>Añadir fondos</b></label>
-      {% with messages = get_flashed_messages() %}
-      {% if messages[0] %}
-      <div class="notification is-danger">
-        <p style="color: green">{{ messages }}</p>
-      </div>
-      {% endif %}
-      {% endwith %}
-      <input type="number" placeholder="Escribir monto..." id="monto" name="monto" value="">
-      <button type="submit">Añadir</button>
-    </form>
-</div>
   <script src={{ url_for('static', filename='/js/script.js') }}></div>
 <script>
       document.getElementById("inventoryRef").setAttribute("href","/inventory/"+localStorage.getItem("usuarioinfo"));
+
+      console.log(localStorage.getItem("usuarioinfo"))
     </script>
 </body>
 </html>

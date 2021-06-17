@@ -29,9 +29,12 @@
 </div>
 <div class="centered">
   <a href="../games" class="bigButton">Ver catálogo</a>
-  <a href="../profile" class="bigButton">Ver perfil</a>
+  <a href="" class="bigButton" id="profileRef">Ver perfil</a>
 </div>
 
   <script src={{ url_for('static', filename='/js/script.js') }}></script>
+<script>
+      document.getElementById("profileRef").setAttribute("href","/profile/"+localStorage.getItem("usuarioinfo"));
+</script>
 </body>
 </html>

@@ -36,4 +36,9 @@
         inventoryRef.setAttribute("href","/inventory/"+localStorage.getItem("usuarioinfo"));
   }
 
+    profileRef = document.getElementById('profileRef');
+    if(profileRef !== null){
+          profileRef.setAttribute("href","/profile/"+localStorage.getItem("usuarioinfo"));
+    }
+
  
