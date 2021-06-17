@@ -78,7 +78,8 @@ def print_tiendas():
 @app.route('/inventory/<user_id>', methods=['GET', 'DELETE'])
 def print_stock(user_id):
     if request.method == 'GET':
-        return render_template('inventory.html', data=db.session.query(Game)
+        res = None
+        return render_template('inventory.html', res=res, data=db.session.query(Game)
                                .join(Inventory)
                                .filter(Game.id == Inventory.g_id, Inventory.c_id == user_id).all())
     else:

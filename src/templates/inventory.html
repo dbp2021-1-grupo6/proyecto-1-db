@@ -8,12 +8,21 @@
   <title>Inventario</title>
 </head>
 <body>
+  <input type="text" value="{{ res['username'] }}" id="nombre" hidden>
 <div class="navBar">
-  <a href="../home" class="navBarElement">U-Games</a>
-  <div class = "navBarLoginBar">
-    <a href="../register" class="navBarElement">Registrarse</a>
-    <a href="../login" class="navBarElement">Iniciar Sesión</a>
-  </div>
+    <a href="../home" class="navBarElement">U-Games <div id="nombreusuario"></div></a>
+    <div class = "navBarLoginBar">
+      
+      <div class = "navBarLoginBar" id="navLogOut">
+        <a href="../register" class="navBarElement">Registrarse</a>
+        <a href="../login" class="navBarElement">Iniciar Sesión</a>
+      </div>
+    
+      <div class = "navBarLoginBar" id="navLogIn" style="display: none;">
+        <a class="navBarElement" id="cerrarsesion">Cerrar sesion</a>
+      </div>
+  
+    </div>
 </div>
 <h1>
   INVENTARIO
@@ -57,5 +66,8 @@
         }
     }
 </script>
+
+<script src={{ url_for('static', filename='/js/script.js') }}></script>
+
 </body>
 </html>
