@@ -55,17 +55,14 @@ def home():
 @app.route('/games', methods=['GET', 'POST'])
 def games():
     if request.method == 'GET':
-        res = None
-        return render_template('game.html', res=res,  data=Game.query.all())
+        return render_template('game.html', res=None,  data=Game.query.all())
     else:
         content = json.loads(request.data)
         login_id = Client.query.filter_by(username=content['name']).first().id
         if Inventory.query.filter_by(c_id=login_id, g_id=content['id']).first() is not None:
-            print('el redirect no funca')
             flash('Juego ya comprado')
             return redirect(url_for('games'))
         elif Client.query.filter_by(id=login_id).first().balance < Game.query.filter_by(id=content['id']).first().price:
-            print('el redirect no funca')
             flash('Fondos Insuficientes')
             return redirect(url_for('games'))
         else:
@@ -77,13 +74,16 @@ def games():
             return json.dumps({'message': "ok"})
 
 
-@app.route('/inventory/<user_id>', methods=['GET', 'DELETE'])
-def print_stock(user_id):
+@app.route('/inventory/<username>', methods=['GET', 'DELETE'])
+def print_stock(username):
     if request.method == 'GET':
-        res = None
-        return render_template('inventory.html', res=res, data=db.session.query(Game)
-                               .join(Inventory)
-                               .filter(Game.id == Inventory.g_id, Inventory.c_id == user_id).all())
+        user_id = Client.query.filter_by(username=username).first().id
+        if user_id is not None:
+            return render_template('inventory.html', res=None, data=db.session.query(Game)
+                                   .join(Inventory)
+                                   .filter(Game.id == Inventory.g_id, Inventory.c_id == user_id).all())
+        else:
+            return redirect(url_for('home'))
     else:
         content = json.loads(request.data)
         login_id = Client.query.filter_by(username=content['name']).first().id

@@ -29,7 +29,7 @@
     <img src="https://www.pasrc.org/sites/g/files/toruqf431/files/styles/freeform_750w/public/2021-03/blank-profile-picture-973460_1280.jpg?itok=QzRqRVu8" class="mainImage" style="width:300px;height:300px;">
   </div>
   <div class="invButton">
-    <a href="../inventory/3" >Ver inventario</a>
+    <a href="" id="inventoryRef">Ver inventario</a>
   </div>
   <div class="fondos">
     <form action="/profile" method="post">
@@ -45,8 +45,9 @@
       <button type="submit">Añadir</button>
     </form>
 </div>
-
-
-  <script src={{ url_for('static', filename='/js/script.js') }}></script>
+  <script src={{ url_for('static', filename='/js/script.js') }}></div>
+<script>
+      document.getElementById("inventoryRef").setAttribute("href","/inventory/"+localStorage.getItem("usuarioinfo"));
+    </script>
 </body>
 </html>
