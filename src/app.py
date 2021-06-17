@@ -40,8 +40,9 @@ def redirect_home():
 
 
 @app.route('/home', methods=['GET'])
+
 def home():
-    return render_template('home.html')
+    return render_template('home.html', res = None)
 
 
 @app.route('/games', methods=['GET', 'POST'])
@@ -118,13 +119,13 @@ def login():
         content = request.form
         client = Client.query.filter_by(username=content['username']).first()
 
-        minombre = content['username']
-
         if(client): 
             if(client.password == content['psw']):
                 print("usuario logeado con exito")
                 #return "usuario registrado con exito"
-                return render_template('home.html', minombre=minombre) #aqui
+                res['username'] = content['username']
+                res['estado'] = 1
+                return render_template('home.html', res = res) #aqui
             else: 
                 print("la contraseña es incorrecta")
 
@@ -146,7 +147,8 @@ def login():
 
 @app.route('/profile', methods=['GET'])
 def profile():
-    return render_template('profile.html')
+    res = None
+    return render_template('profile.html', res = res)
 
 
 if __name__ == '__main__':

@@ -2,16 +2,26 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href={{ url_for('static', filename='/css/navbar.css') }}>
-  <link rel="stylesheet" href={{ url_for('static', filename='/css/page.css') }}>
+   <link rel="stylesheet" href={{ url_for('static', filename='/css/page.css') }}>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
+<input type="text" value="{{ res['username'] }}" id="nombre" hidden>
+
 <div class="navBar">
   <a href="../home" class="navBarElement">U-Games <div id="nombreusuario"></div></a>
   <div class = "navBarLoginBar">
-    <a href="../register" class="navBarElement">Registrarse</a>
-    <a href="../login" class="navBarElement">Iniciar Sesión</a>
+    
+    <div class = "navBarLoginBar" id="navLogOut">
+      <a href="../register" class="navBarElement">Registrarse</a>
+      <a href="../login" class="navBarElement">Iniciar Sesión</a>
+    </div>
+  
+    <div class = "navBarLoginBar" id="navLogIn" style="display: none;">
+      <a class="navBarElement" id="cerrarsesion">Cerrar sesion</a>
+    </div>
+
   </div>
 </div>
 <div>
@@ -21,24 +31,7 @@
   <a href="../games" class="bigButton">Ver catálogo</a>
   <a href="../profile" class="bigButton">Ver perfil</a>
 </div>
+
+  <script src={{ url_for('static', filename='/js/script.js') }}></script>
 </body>
 </html>
-
-<script>
-
-  localStorage = window.localStorage;
-
-  usuairoinfo = document.getElementById("nombre");
-
-  nombreusuario = document.getElementById("nombreusuario");
-
-  if (usuairoinfo.value != '') {
-    localStorage.setItem("usuairoinfo", usuairoinfo.value)
-  }
-
-  if(localStorage.getItem("usuairoinfo")) {
-    nombreusuario.innerHTML = localStorage.getItem("usuairoinfo")
-  }
- 
-  
-</script>
