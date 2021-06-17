@@ -4,7 +4,7 @@
 - Sebastián Calle
 - Esteban Vásquez
 ## Descripción
-El proyecto que hemos realizado simula una página web de una empresa de venta de videojuegos, en la cual un cliente podrá realizar compras de manera sencilla, teniendo así acceso al catálogo de los juego disponibles de la tienda y los precios de cada uno de los juegos. Además el cliente será capaz de crear una cuanta para la página web, donde se registrará, y tiene acceso a un inventario individual, en el que se almacenarán los videojuegos que decida comprar. Nuestra página web también simula transacciones de compra y de adición de fondos para el usuario.
+El proyecto que hemos realizado simula una página web de una empresa de venta de videojuegos, en la cual un cliente podrá realizar compras de manera sencilla, teniendo así acceso al catálogo de los juego disponibles de la tienda y los precios de cada uno de los juegos. Además el cliente será capaz de crear una cuenta para la página web, donde se registrará, y tiene acceso a un inventario individual, en el que se almacenarán los videojuegos que decida comprar. Nuestra página web también simula transacciones de compra y de adición de fondos para el usuario.
 ## Objetivos
 - Los clientes pueden registrarse por medio de un usuario y contraseña.
 - Los clientes pueden acceder a su cuenta y logearse.
