@@ -40,9 +40,8 @@ def redirect_home():
 
 
 @app.route('/home', methods=['GET'])
-
 def home():
-    return render_template('home.html', res = None)
+    return render_template('home.html', res=None)
 
 
 @app.route('/games', methods=['GET', 'POST'])
@@ -82,90 +81,52 @@ def print_stock(user_id):
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_user_get():
-    error = False
-    x=""
-    y=""
-    z=""
-    x1 = True
     if request.method == 'GET':
         return render_template('register.html')
     else:
-        try:
-            content = request.form
-            db.session.add(Client(username=content['username'], password=content['psw'], balance=200))
-            x=content['username']
-            y=content['psw']
-            z =content['psw-repeat']
-            db.session.commit()
-            x1 = False
-            return redirect(url_for('home'))
-        except:
-            error = True
-            db.session.rollback()
-        finally:
-            db.session.close()
-
-        if error:
-            if(y!= z):
-                flash("Las contraseñas no coinciden")
-            elif(len(x)>32 or len(y)>32):
-                flash("Pruebe con un Username/Password mas corto")
-            elif(x1==True):
-                flash("Ya existe un usuario con ese Username")
-            print(x1)
+        content = request.form
+        user = content['username']
+        passw = content['psw']
+        passw_confirm = content['psw-repeat']
+        if passw != passw_confirm:
+            flash("Las contraseñas no coinciden")
             return redirect(url_for('register_user_get'))
+        elif len(user) > 32 or len(passw) > 32:
+            flash("Pruebe con un Username/Password mas corto")
+            return redirect(url_for('register_user_get'))
+        elif Client.query.filter_by(username=user).first() is not None:
+            flash("Ya existe un usuario con ese Username")
+            return redirect(url_for('register_user_get'))
+        db.session.add(Client(username=content['username'], password=content['psw'], balance=200))
+        db.session.commit()
+        db.session.close()
+        return redirect(url_for('home'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-
-    res = {
-        'username': '',
-        'estado': 0, # si es cero hay error en logeo, si es 1 todo correcto,
-        'mensaje': ''
-    }
-
-    usuarioencontrado = {
-        'username': '',
-        'password': ''
-    }
-
-    if(request.method == 'POST'): 
-        # content = json.loads(request.data)
+    if request.method == 'POST':
         content = request.form
         client = Client.query.filter_by(username=content['username']).first()
-
-        if(client): 
-            if(client.password == content['psw']):
-                print("usuario logeado con exito")
-                #return "usuario registrado con exito"
-                res['username'] = content['username']
-                res['estado'] = 1
-                return render_template('home.html', res = res) #aqui
-            else: 
-                print("la contraseña es incorrecta")
-
-                res['estado'] = 0
-                res['mensaje'] = 'Contraseña Incorrecta'
-
-                return render_template('login.html', res = res)
-            
-        else: 
-            print("el usuaro no es valido")
-            res['estado'] = 0
-            res['mensaje'] = 'Usuario no registrado'
-            return render_template('login.html', res = res)
-            #return 'El usuario no es valido'
-
+        if client is not None:
+            if client.password == content['psw']:
+                res = {'username': content['username']}
+                return render_template('home.html', res=res)
+            else:
+                flash("Contraseña Incorrecta")
+                return redirect(url_for('login'))
+        else:
+            flash("Usuario no existente")
+            return redirect(url_for('login'))
     if request.method == 'GET':
-        return render_template('login.html', res = res)
+        return render_template('login.html')
 
 
 @app.route('/profile', methods=['GET'])
 def profile():
     res = None
-    return render_template('profile.html', res = res)
+    return render_template('profile.html', res=res)
 
 
 if __name__ == '__main__':
-    app.run(port=8080, threaded=True,debug = True , host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1')
