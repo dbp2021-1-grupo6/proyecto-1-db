@@ -81,22 +81,38 @@ def print_stock(user_id):
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_user_get():
+    error = False
+    x=""
+    y=""
+    z=""
+    x1 = True
     if request.method == 'GET':
         return render_template('register.html')
     else:
-        content = request.form
-        if len(content['username']) > 32:
-            raise ValidationError('Nombre del usuario es mayor al límite de 32 caracteres.')
-        elif len(content['psw']) > 32:
-            raise ValidationError('Contraseña mayor del límite de 32 caracteres.')
-        elif content['psw'] is content['psw-repeat']:
-            raise ValidationError('Contraseñas no coinciden.')
-        elif Client.query.filter_by(username=content['username']).first() is not None:
-            raise ValidationError('Nombre del usuario ya existe.')
-        else:
+        try:
+            content = request.form
             db.session.add(Client(username=content['username'], password=content['psw'], balance=200))
+            x=content['username']
+            y=content['psw']
+            z =content['psw-repeat']
             db.session.commit()
+            x1 = False
             return redirect(url_for('home'))
+        except:
+            error = True
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+        if error:
+            if(y!= z):
+                flash("Las contraseñas no coinciden")
+            elif(len(x)>32 or len(y)>32):
+                flash("Pruebe con un Username/Password mas corto")
+            elif(x1==True):
+                flash("Ya existe un usuario con ese Username")
+            print(x1)
+            return redirect(url_for('register_user_get'))
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -150,4 +166,4 @@ def profile():
 
 
 if __name__ == '__main__':
-    app.run(port=8080, threaded=True, host='127.0.0.1')
+    app.run(port=8080, threaded=True,debug = True , host='127.0.0.1')
