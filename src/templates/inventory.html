@@ -58,7 +58,7 @@
             console.log(buttonId);
             const message = {'id':buttonId, 'name':username};
             $.post({
-                url: '/inventory/3',
+                url: '/inventory/username',
                 type: 'delete',
                 contentType: 'application/json',
                 success: function(data){console.log("Juego borrado del inventario"); window.location.reload()},
