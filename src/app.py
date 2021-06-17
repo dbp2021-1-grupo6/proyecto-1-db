@@ -1,5 +1,6 @@
 import json
 
+import werkzeug
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.routing import ValidationError
@@ -34,6 +35,14 @@ class Inventory(db.Model):
 db.create_all()
 
 
+@app.errorhandler(werkzeug.exceptions.BadRequest)
+def handle_bad_request(e):
+    return render_template('errorManager.html')
+
+
+app.register_error_handler(404, handle_bad_request)
+
+
 @app.route('/')
 def redirect_home():
     return redirect(url_for('home'))
@@ -61,6 +70,7 @@ def print_tiendas():
             client.balance -= Game.query.filter_by(id=content['id']).first().price
             db.session.add(Inventory(g_id=content['id'], c_id=login_id))
             db.session.commit()
+            db.session.close()
             return json.dumps({'message': "ok"})
 
 
@@ -76,6 +86,7 @@ def print_stock(user_id):
         print(content['id'])
         Inventory.query.filter_by(c_id=login_id, g_id=content['id']).delete()
         db.session.commit()
+        db.session.close()
         return json.dumps({'message': "ok"})
 
 
