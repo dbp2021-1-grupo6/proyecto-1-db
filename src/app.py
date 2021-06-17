@@ -39,6 +39,7 @@ def handle_bad_request(e):
 
 
 app.register_error_handler(404, handle_bad_request)
+app.register_error_handler(500, handle_bad_request)
 
 
 @app.route('/')
@@ -135,10 +136,18 @@ def login():
         return render_template('login.html')
 
 
-@app.route('/profile', methods=['GET'])
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    res = None
-    return render_template('profile.html', res=res)
+    if request.method == 'GET':
+        res = None
+        return render_template('profile.html', res=res)
+    else:
+        client = Client.query.filter_by(id=3).first()
+        client.balance += float(request.form['monto'])
+        db.session.commit()
+        db.session.close()
+        flash('Fondos añadidos')
+        return redirect(url_for('profile'))
 
 
 if __name__ == '__main__':

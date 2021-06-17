@@ -31,6 +31,6 @@
 
   cerrarsesion.addEventListener('click', function() {
     localStorage.clear();
-    window.location = '/login';
+    window.location = '/home';
   })
  
