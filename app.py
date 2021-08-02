@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, static_url_path="/static")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost:5432/proyecto1dbp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://lxolkxyqsxdjei:97f8d772cdfaf829a26c90116c15791892d9a4f162b7681773ca9fbc697fe3ef@ec2-34-194-130-103.compute-1.amazonaws.com:5432/ddvm984l3tlkav'
 db = SQLAlchemy(app)
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 app.secret_key = b'_5#y2L"F4Qpz\n\xec]/'
